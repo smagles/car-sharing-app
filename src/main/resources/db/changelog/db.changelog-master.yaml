@@ -1,1 +1,15 @@
 databaseChangeLog:
+  - include:
+      file: db/changelog/changes/V2025.05.28.001__create_cars_table.sql
+  -  include:
+       file: db/changelog/changes/V2025.05.28.002__create_roles_table.sql
+  - include:
+      file: db/changelog/changes/V2025.05.28.003__insert_roles_table.sql
+  - include:
+      file: db/changelog/changes/V2025.05.28.004__create_users_table.sql
+  - include:
+      file: db/changelog/changes/V2025.05.28.005__create_user_roles_table.sql
+  - include:
+      file: db/changelog/changes/V2025.05.28.006__create_rentals_table.sql
+  - include:
+      file: db/changelog/changes/V2025.05.29.001__create_payments_table.sql

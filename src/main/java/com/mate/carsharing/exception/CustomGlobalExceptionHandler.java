@@ -39,6 +39,11 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(responseBody, headers, status);
     }
 
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler({JwtException.class})
     public ResponseEntity<Object> handleJwtException(JwtException ex) {
         return buildResponseEntity(HttpStatus.UNAUTHORIZED, ex.getMessage());

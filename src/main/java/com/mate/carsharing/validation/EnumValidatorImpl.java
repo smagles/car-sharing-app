@@ -13,6 +13,7 @@ public class EnumValidatorImpl implements ConstraintValidator<EnumValidator, Str
     public void initialize(EnumValidator annotation) {
         acceptedValues = Arrays.stream(annotation.enumClass().getEnumConstants())
                 .map(Enum::name)
+                .map(String::toUpperCase)
                 .collect(Collectors.toList());
     }
 

@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto updateUserRole(Long userId, String newRole) {
         User user = findUserById(userId);
-        user.setRole(RoleName.valueOf(newRole));
+        user.setRole(validateAndParseRole(newRole));
         userRepository.save(user);
         return userMapper.toDto(user);
     }
@@ -82,4 +82,11 @@ public class UserServiceImpl implements UserService {
         );
     }
 
+    private RoleName validateAndParseRole(String roleName) {
+        try {
+            return RoleName.valueOf(roleName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid role: " + roleName);
+        }
+    }
 }

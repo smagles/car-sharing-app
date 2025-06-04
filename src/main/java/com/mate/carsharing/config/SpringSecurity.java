@@ -22,11 +22,24 @@ public class SpringSecurity {
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    /**
+     * Provides a password encoder bean using BCrypt hashing for secure password storage.
+     *
+     * @return a BCryptPasswordEncoder instance
+     */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Configures the application's HTTP security filter chain.
+     *
+     * Disables CORS and CSRF protections, permits unauthenticated access to authentication endpoints, error pages, and Swagger UI resources, and requires authentication for all other requests. Integrates a JWT authentication filter and sets a custom user details service.
+     *
+     * @return the configured SecurityFilterChain
+     * @throws Exception if an error occurs during security configuration
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors(AbstractHttpConfigurer::disable)
@@ -43,6 +56,12 @@ public class SpringSecurity {
                 .build();
     }
 
+    /****
+     * Exposes the application's {@link AuthenticationManager} bean using the provided authentication configuration.
+     *
+     * @param authenticationConfiguration the authentication configuration from which to obtain the authentication manager
+     * @return the configured {@link AuthenticationManager} instance
+     */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration) throws Exception {

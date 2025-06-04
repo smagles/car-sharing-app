@@ -31,11 +31,20 @@ public class JwtUtil {
     private String secretString;
     private Key secret;
 
+    /**
+     * Initializes the cryptographic secret key for JWT operations after dependency injection.
+     */
     @PostConstruct
     public void init() {
         this.secret = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * Generates a JWT token for the specified username with the configured expiration time.
+     *
+     * @param username the username to set as the token's subject
+     * @return a signed JWT token string
+     */
     public String generateToken(String username) {
         return Jwts.builder()
                 .subject(username)
@@ -45,15 +54,35 @@ public class JwtUtil {
                 .compact();
     }
 
+    /**
+     * Checks whether the provided JWT token is valid based on its expiration date.
+     *
+     * @param token the JWT token to validate
+     * @return true if the token has not expired; false otherwise
+     */
     public boolean isValidToken(String token) {
         return !getClaim(token, Claims::getExpiration).before(new Date());
     }
 
+    /**
+     * Extracts the username from the subject claim of the provided JWT token.
+     *
+     * @param token the JWT token from which to extract the username
+     * @return the username contained in the token's subject claim
+     */
     public String getUserName(String token) {
         return getClaim(token, Claims::getSubject);
 
     }
 
+    /**
+     * Extracts a specific claim from a JWT token using the provided function.
+     *
+     * @param token the JWT token string
+     * @param claimsFunction a function to extract a claim from the token's claims
+     * @return the extracted claim value
+     * @throws JwtException if the token is expired, malformed, unsupported, has an invalid signature, or is otherwise invalid
+     */
     private <T> T getClaim(String token, Function<Claims, T> claimsFunction) {
         try {
             final Claims claims = Jwts.parser()

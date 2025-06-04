@@ -30,6 +30,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
+    /**
+     * Processes incoming HTTP requests to authenticate users based on a JWT token.
+     *
+     * Extracts the JWT token from the Authorization header, validates it, and if valid, sets the authentication in the security context for the request. If the token is invalid or missing, the request proceeds unauthenticated or returns a 401 Unauthorized response if a JWT exception occurs.
+     *
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @param filterChain the filter chain to continue processing
+     * @throws ServletException if an error occurs during filtering
+     * @throws IOException if an I/O error occurs during filtering
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -53,6 +64,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
+    /**
+     * Extracts the JWT token from the Authorization header of the HTTP request.
+     *
+     * @param request the HTTP request containing the Authorization header
+     * @return the JWT token if present and prefixed with "Bearer "; otherwise, null
+     */
     private String getToken(HttpServletRequest request) {
         String token = request.getHeader(AUTHORIZATION_HEADER);
         if (token != null && token.startsWith(BEARER_PREFIX)) {
@@ -61,6 +78,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return null;
     }
 
+    /**
+     * Sends a 401 Unauthorized JSON response with a specified error message.
+     *
+     * @param response the HTTP response to write to
+     * @param message the error message to include in the response body
+     * @throws IOException if an input or output exception occurs while writing the response
+     */
     private void handleJwtException(
             HttpServletResponse response, String message) throws IOException {
 

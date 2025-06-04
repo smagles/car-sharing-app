@@ -21,6 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
+    /**
+     * Updates the role of a user identified by their ID.
+     *
+     * Only users with the MANAGER role can access this endpoint.
+     *
+     * @param id the ID of the user whose role is to be updated
+     * @param request the role update request containing the new role
+     * @return the updated user information
+     */
     @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{id}/role")
     public UserDto updateUserRole(
@@ -29,12 +38,24 @@ public class UserController {
         return userService.updateUserRole(id, request.role());
     }
 
+    /**
+     * Retrieves information about the currently authenticated user.
+     *
+     * @param authentication the authentication context containing the current user's details
+     * @return the current user's information as a UserDto
+     */
     @GetMapping("/me")
     public UserDto getCurrentUserInfo(Authentication authentication) {
         String email = authentication.getName();
         return userService.getUserInfo(email);
     }
 
+    /**
+     * Updates the information of the currently authenticated user.
+     *
+     * @param request the user information update request
+     * @return the updated user data
+     */
     @PutMapping("/me")
     public UserDto updateCurrentUserInfo(
             Authentication authentication,

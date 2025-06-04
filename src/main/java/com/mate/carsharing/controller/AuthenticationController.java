@@ -22,12 +22,24 @@ public class AuthenticationController {
     private final UserService userService;
     private final AuthenticationService authenticationService;
 
+    /**
+     * Authenticates a user with the provided login credentials.
+     *
+     * @param request the user's login credentials
+     * @return a response containing authentication details
+     */
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto request) {
         return authenticationService.authenticate(request);
     }
 
+    /**
+     * Registers a new user with the provided registration details.
+     *
+     * @param userDto the registration information for the new user
+     * @return the registered user's data
+     */
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto register(@Valid @RequestBody UserRegistrationRequestDto userDto) {

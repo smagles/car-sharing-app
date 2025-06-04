@@ -10,10 +10,29 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(config = MapperConfig.class)
 public interface UserMapper {
-    User toModel(UserRegistrationRequestDto userRegistrationRequestDto);
+    /****
+ * Converts a UserRegistrationRequestDto to a User domain model instance.
+ *
+ * @param userRegistrationRequestDto the registration request data
+ * @return a new User populated with data from the registration request
+ */
+User toModel(UserRegistrationRequestDto userRegistrationRequestDto);
 
-    User toModel(@MappingTarget User user, UserUpdateRequestDto userUpdateRequestDto);
+    /****
+ * Updates the given User model instance with data from a UserUpdateRequestDto.
+ *
+ * @param user the User instance to update
+ * @param userUpdateRequestDto the data transfer object containing updated user information
+ * @return the updated User instance
+ */
+User toModel(@MappingTarget User user, UserUpdateRequestDto userUpdateRequestDto);
 
-    UserDto toDto(User user);
+    /****
+ * Converts a User model instance to a UserDto data transfer object.
+ *
+ * @param user the User model to convert
+ * @return the corresponding UserDto representation
+ */
+UserDto toDto(User user);
 
 }

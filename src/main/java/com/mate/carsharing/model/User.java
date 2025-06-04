@@ -50,11 +50,21 @@ public class User implements UserDetails {
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
 
+    /**
+     * Returns a collection containing the user's granted authority based on their role.
+     *
+     * @return a singleton list with a SimpleGrantedAuthority representing the user's role
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
+    /**
+     * Returns the user's email address, which serves as the username for authentication.
+     *
+     * @return the user's email
+     */
     @Override
     public String getUsername() {
         return email;

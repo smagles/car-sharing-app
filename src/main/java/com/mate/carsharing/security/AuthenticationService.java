@@ -14,6 +14,12 @@ public class AuthenticationService {
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Authenticates a user with the provided credentials and returns a JWT token upon successful authentication.
+     *
+     * @param request the user login request containing email and password
+     * @return a response containing the generated JWT token
+     */
     public UserLoginResponseDto authenticate(UserLoginRequestDto request) {
 
         Authentication authentication = authenticationManager.authenticate(

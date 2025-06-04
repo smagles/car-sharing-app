@@ -13,3 +13,9 @@ databaseChangeLog:
       file: db/changelog/changes/V2025.05.28.006__create_rentals_table.sql
   - include:
       file: db/changelog/changes/V2025.05.29.001__create_payments_table.sql
+  - include:
+      file: db/changelog/changes/V2025.06.04.001__drop_user_roles_table.sql
+  - include:
+      file: db/changelog/changes/V2025.06.04.002__drop_roles_table.sql
+  - include:
+      file: db/changelog/changes/V2025.06.04.003__alter_users_table.sql

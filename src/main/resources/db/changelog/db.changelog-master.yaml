@@ -19,3 +19,5 @@ databaseChangeLog:
       file: db/changelog/changes/V2025.06.04.002__drop_roles_table.sql
   - include:
       file: db/changelog/changes/V2025.06.04.003__alter_users_table.sql
+  - include:
+      file: db/changelog/changes/V2025.06.07.001__insert_default_cars.sql

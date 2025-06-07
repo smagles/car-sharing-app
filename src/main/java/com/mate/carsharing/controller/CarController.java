@@ -4,6 +4,7 @@ import com.mate.carsharing.dto.car.CarCreateRequestDto;
 import com.mate.carsharing.dto.car.CarDto;
 import com.mate.carsharing.dto.car.CarUpdateRequestDto;
 import com.mate.carsharing.service.car.CarService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class CarController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('MANAGER')")
-    public CarDto createCar(@RequestBody CarCreateRequestDto requestDto) {
+    public CarDto createCar(@Valid @RequestBody CarCreateRequestDto requestDto) {
         return carService.createCar(requestDto);
     }
 
@@ -43,7 +44,8 @@ public class CarController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('MANAGER')")
-    public CarDto updateCar(@PathVariable Long id, @RequestBody CarUpdateRequestDto requestDto) {
+    public CarDto updateCar(@PathVariable Long id,
+                            @Valid @RequestBody CarUpdateRequestDto requestDto) {
         return carService.updateCar(id, requestDto);
     }
 

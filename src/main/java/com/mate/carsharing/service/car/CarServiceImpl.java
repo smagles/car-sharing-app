@@ -3,13 +3,16 @@ package com.mate.carsharing.service.car;
 import com.mate.carsharing.dto.car.CarCreateRequestDto;
 import com.mate.carsharing.dto.car.CarDto;
 import com.mate.carsharing.dto.car.CarUpdateRequestDto;
+import com.mate.carsharing.exception.custom.NoAvailableCarException;
 import com.mate.carsharing.mapper.CarMapper;
 import com.mate.carsharing.model.Car;
 import com.mate.carsharing.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +33,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public List<CarDto> getAllCars() {
-        return carRepository.findAll()
-                .stream()
-                .map(carMapper::toDto)
-                .toList();
+    public Page<CarDto> getAllCars(Pageable pageable) {
+        return carRepository.findAll(pageable).map(carMapper::toDto);
     }
 
     @Override
@@ -52,9 +52,21 @@ public class CarServiceImpl implements CarService {
 
     }
 
-    private Car findCarById(Long id) {
+    @Override
+    public Car findCarById(Long id) {
         return carRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Car not found with id: " + id));
+    }
+
+    @Transactional
+    @Override
+    public void reserveCar(Car car) {
+        if (car.getInventory() <= 0) {
+            throw new NoAvailableCarException(
+                    "No available cars for car id: " + car.getId());
+        }
+        car.setInventory(car.getInventory() - 1);
+        carRepository.save(car);
     }
 }

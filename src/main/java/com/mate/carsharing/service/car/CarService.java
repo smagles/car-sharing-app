@@ -18,7 +18,5 @@ public interface CarService {
 
     void deleteCar(Long id);
 
-    Car findCarById(Long id);
-
     Car reserveCar(Long carId);
 }

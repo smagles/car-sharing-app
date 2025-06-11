@@ -12,8 +12,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,10 +51,19 @@ public class RentalController {
     }
 
     @GetMapping
-    public Page<RentalDto> getRentals(
-            @PageableDefault(size = 10, sort = "rentalDate", direction = DESC)
-            Pageable pageable,
-            @AuthenticationPrincipal User user) {
-        return rentalService.getRentalsByUser(pageable, user);
+    public Page<RentalDto> getRentals(@AuthenticationPrincipal User user,
+                                      @PageableDefault(size = 10, sort = "rentalDate",
+                                              direction = DESC) Pageable pageable) {
+        return rentalService.getRentalsByUser(user, pageable);
+    }
+
+    @PreAuthorize("hasRole('MANAGER')")
+    @GetMapping("/user/{userId}")
+    public Page<RentalDto> getRentalsByUser(
+            @PathVariable Long userId,
+            @PageableDefault(size = 10, sort = "rentalDate",
+                    direction = Sort.Direction.DESC) Pageable pageable) {
+
+        return rentalService.getRentalsByUserId(userId, pageable);
     }
 }

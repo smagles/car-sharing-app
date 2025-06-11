@@ -9,6 +9,7 @@ import com.mate.carsharing.model.Rental;
 import com.mate.carsharing.model.User;
 import com.mate.carsharing.repository.RentalRepository;
 import com.mate.carsharing.service.car.CarService;
+import com.mate.carsharing.service.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ public class RentalServiceImpl implements RentalService {
     private final RentalRepository rentalRepository;
     private final RentalMapper rentalMapper;
     private final CarService carService;
+    private final UserService userService;
 
     @Override
     @Transactional
@@ -45,8 +47,15 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public Page<RentalDto> getRentalsByUser(Pageable pageable, User user) {
-        return rentalRepository.findByUser(pageable, user)
+    public Page<RentalDto> getRentalsByUser(User user, Pageable pageable) {
+        return rentalRepository.findByUser(user, pageable)
+                .map(rentalMapper::toDto);
+    }
+
+    @Override
+    public Page<RentalDto> getRentalsByUserId(Long userId, Pageable pageable) {
+        User user = userService.findUserById(userId);
+        return rentalRepository.findByUser(user, pageable)
                 .map(rentalMapper::toDto);
     }
 

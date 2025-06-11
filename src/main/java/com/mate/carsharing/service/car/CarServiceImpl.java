@@ -62,11 +62,11 @@ public class CarServiceImpl implements CarService {
     @Transactional
     @Override
     public void reserveCar(Car car) {
-        if (car.getInventory() <= 0) {
+        int updatedRows = carRepository.decrementInventoryIfAvailable(car.getId());
+
+        if (updatedRows == 0) {
             throw new NoAvailableCarException(
                     "No available cars for car id: " + car.getId());
         }
-        car.setInventory(car.getInventory() - 1);
-        carRepository.save(car);
     }
 }

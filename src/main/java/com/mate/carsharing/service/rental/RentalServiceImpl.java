@@ -28,8 +28,7 @@ public class RentalServiceImpl implements RentalService {
     @Override
     @Transactional
     public RentalDto createRental(RentalCreateRequestDto requestDto, User user) {
-        Car car = carService.findCarById(requestDto.getCarId());
-        carService.reserveCar(car);
+        Car car = carService.reserveCar(requestDto.getCarId());
         Rental newRental = rentalMapper.toEntity(requestDto, car, user);
         newRental = rentalRepository.save(newRental);
         return rentalMapper.toDto(newRental);
@@ -56,6 +55,12 @@ public class RentalServiceImpl implements RentalService {
     public Page<RentalDto> getRentalsByUserId(Long userId, Pageable pageable) {
         User user = userService.findUserById(userId);
         return rentalRepository.findByUser(user, pageable)
+                .map(rentalMapper::toDto);
+    }
+
+    @Override
+    public Page<RentalDto> getAllRentals(Pageable pageable) {
+        return rentalRepository.findAll(pageable)
                 .map(rentalMapper::toDto);
     }
 

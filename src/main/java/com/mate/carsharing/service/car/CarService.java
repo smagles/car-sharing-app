@@ -20,5 +20,5 @@ public interface CarService {
 
     Car findCarById(Long id);
 
-    void reserveCar(Car car);
+    Car reserveCar(Long carId);
 }

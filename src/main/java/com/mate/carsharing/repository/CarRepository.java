@@ -1,15 +1,13 @@
 package com.mate.carsharing.repository;
 
+import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
+
 import com.mate.carsharing.model.Car;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Lock;
 
 public interface CarRepository extends JpaRepository<Car, Long> {
-    @Modifying
-    @Query("update Car c set c.inventory = c.inventory - 1 "
-            + "where c.id = :id and c.inventory > 0")
-    int decrementInventoryIfAvailable(@Param("id") Long id);
-
+    @Lock(PESSIMISTIC_WRITE)
+    Optional<Car> findById(Long id);
 }

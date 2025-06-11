@@ -66,4 +66,11 @@ public class RentalController {
 
         return rentalService.getRentalsByUserId(userId, pageable);
     }
+
+    @PreAuthorize("hasRole('MANAGER')")
+    @GetMapping("/all")
+    public Page<RentalDto> getAllRentals(@PageableDefault(size = 10, sort = "rentalDate",
+                    direction = Sort.Direction.DESC) Pageable pageable) {
+        return rentalService.getAllRentals(pageable);
+    }
 }

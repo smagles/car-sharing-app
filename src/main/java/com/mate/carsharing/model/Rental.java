@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Setter
@@ -21,6 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "rentals")
+@ToString
 public class Rental {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,9 @@ public class Rental {
 
     @Column(name = "actual_return_date")
     private LocalDate actualReturnDate;
+
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 
     @ManyToOne
     @JoinColumn(name = "car_id")

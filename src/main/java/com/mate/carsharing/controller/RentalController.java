@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,15 +34,16 @@ public class RentalController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("isAuthenticated()")
     public RentalDto createRental(@RequestBody @Valid RentalCreateRequestDto rentalCreateRequestDto,
                                   @AuthenticationPrincipal User user) {
         return rentalService.createRental(rentalCreateRequestDto, user);
     }
 
     @GetMapping("/{id}")
-    public RentalDetailedResponseDto getRental(
-            @PathVariable Long id,
-            @AuthenticationPrincipal User user) {
+    @PreAuthorize("isAuthenticated()")
+    public RentalDetailedResponseDto getRental(@PathVariable Long id,
+                                               @AuthenticationPrincipal User user) {
 
         if (user.getRole() == RoleName.MANAGER) {
             return rentalService.getRentalById(id);
@@ -51,26 +53,29 @@ public class RentalController {
     }
 
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public Page<RentalDto> getRentals(@AuthenticationPrincipal User user,
+                                      @RequestParam(defaultValue = "true") boolean isActive,
                                       @PageableDefault(size = 10, sort = "rentalDate",
                                               direction = DESC) Pageable pageable) {
-        return rentalService.getRentalsByUser(user, pageable);
+        return rentalService.getRentalsByUser(user, isActive, pageable);
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/user/{userId}")
     public Page<RentalDto> getRentalsByUser(
             @PathVariable Long userId,
+            @RequestParam(defaultValue = "true") boolean isActive,
             @PageableDefault(size = 10, sort = "rentalDate",
                     direction = Sort.Direction.DESC) Pageable pageable) {
 
-        return rentalService.getRentalsByUserId(userId, pageable);
+        return rentalService.getRentalsByUserId(userId, isActive, pageable);
     }
 
     @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/all")
     public Page<RentalDto> getAllRentals(@PageableDefault(size = 10, sort = "rentalDate",
-                    direction = Sort.Direction.DESC) Pageable pageable) {
+            direction = Sort.Direction.DESC) Pageable pageable) {
         return rentalService.getAllRentals(pageable);
     }
 }

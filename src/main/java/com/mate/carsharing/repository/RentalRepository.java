@@ -10,6 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RentalRepository extends JpaRepository<Rental, Long> {
     Optional<Rental> findByIdAndUserId(Long id, Long userId);
 
-    Page<Rental> findByUser(User user, Pageable pageable);
+    Page<Rental> findByUserAndIsActive(User user, boolean isActive, Pageable pageable);
 
 }

@@ -1,5 +1,6 @@
 package com.mate.carsharing.exception;
 
+import com.mate.carsharing.exception.custom.NoAvailableCarException;
 import com.mate.carsharing.exception.custom.RegistrationException;
 import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,8 +40,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(responseBody, headers, status);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
+    @ExceptionHandler({IllegalArgumentException.class, NoAvailableCarException.class})
+    public ResponseEntity<Object> handleIllegalArgumentException(RuntimeException ex) {
         return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 

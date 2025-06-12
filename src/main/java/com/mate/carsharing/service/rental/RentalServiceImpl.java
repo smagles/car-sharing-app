@@ -46,15 +46,15 @@ public class RentalServiceImpl implements RentalService {
     }
 
     @Override
-    public Page<RentalDto> getRentalsByUser(User user, Pageable pageable) {
-        return rentalRepository.findByUser(user, pageable)
+    public Page<RentalDto> getRentalsByUser(User user, boolean isActive, Pageable pageable) {
+        return rentalRepository.findByUserAndIsActive(user, isActive, pageable)
                 .map(rentalMapper::toDto);
     }
 
     @Override
-    public Page<RentalDto> getRentalsByUserId(Long userId, Pageable pageable) {
+    public Page<RentalDto> getRentalsByUserId(Long userId, boolean isActive, Pageable pageable) {
         User user = userService.findUserById(userId);
-        return rentalRepository.findByUser(user, pageable)
+        return rentalRepository.findByUserAndIsActive(user, isActive, pageable)
                 .map(rentalMapper::toDto);
     }
 

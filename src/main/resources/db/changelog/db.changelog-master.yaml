@@ -21,3 +21,7 @@ databaseChangeLog:
       file: db/changelog/changes/V2025.06.04.003__alter_users_table.sql
   - include:
       file: db/changelog/changes/V2025.06.07.001__insert_default_cars.sql
+  - include:
+      file: db/changelog/changes/V2025.06.11.001__add_is_active_to_rentals.sql
+  - include:
+      file: db/changelog/changes/V2025.06.11.002__update_is_active_column.sql

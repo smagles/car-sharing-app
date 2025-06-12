@@ -17,6 +17,7 @@ public class RentalDetailedResponseDto {
     private LocalDate rentalDate;
     private LocalDate returnDate;
     private LocalDate actualReturnDate;
+    private Boolean isActive;
     private CarDto car;
     private UserDto user;
 }

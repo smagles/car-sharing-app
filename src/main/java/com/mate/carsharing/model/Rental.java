@@ -35,6 +35,9 @@ public class Rental {
     @Column(name = "actual_return_date")
     private LocalDate actualReturnDate;
 
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
+
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;

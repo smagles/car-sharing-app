@@ -55,7 +55,7 @@ public class RentalController {
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public Page<RentalDto> getRentals(@AuthenticationPrincipal User user,
-                                      @RequestParam(defaultValue = "true") boolean isActive,
+                                      @RequestParam(defaultValue = "true") Boolean isActive,
                                       @PageableDefault(size = 10, sort = "rentalDate",
                                               direction = DESC) Pageable pageable) {
         return rentalService.getRentalsByUser(user, isActive, pageable);
@@ -65,7 +65,7 @@ public class RentalController {
     @GetMapping("/user/{userId}")
     public Page<RentalDto> getRentalsByUser(
             @PathVariable Long userId,
-            @RequestParam(defaultValue = "true") boolean isActive,
+            @RequestParam(defaultValue = "true") Boolean isActive,
             @PageableDefault(size = 10, sort = "rentalDate",
                     direction = Sort.Direction.DESC) Pageable pageable) {
 

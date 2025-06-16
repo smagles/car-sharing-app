@@ -19,4 +19,6 @@ public interface RentalService {
     Page<RentalDto> getRentalsByUserId(Long userId, boolean isActive, Pageable pageable);
 
     Page<RentalDto> getAllRentals(Pageable pageable);
+
+    RentalDto returnRental(Long rentalId, User user);
 }

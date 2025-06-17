@@ -2,6 +2,7 @@ package com.mate.carsharing.exception;
 
 import com.mate.carsharing.exception.custom.NoAvailableCarException;
 import com.mate.carsharing.exception.custom.RegistrationException;
+import com.mate.carsharing.exception.custom.RentalAlreadyReturnedException;
 import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -60,7 +61,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler({RegistrationException.class})
+    @ExceptionHandler({RegistrationException.class, RentalAlreadyReturnedException.class})
     public ResponseEntity<Object> handleConflictExceptions(RuntimeException ex) {
         return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
     }

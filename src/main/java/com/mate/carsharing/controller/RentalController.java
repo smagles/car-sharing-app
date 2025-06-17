@@ -40,6 +40,23 @@ public class RentalController {
         return rentalService.createRental(rentalCreateRequestDto, user);
     }
 
+    @PostMapping("/{id}/return")
+    @PreAuthorize("isAuthenticated()")
+    public RentalDto returnRental(@PathVariable Long id,
+                                  @AuthenticationPrincipal User user) {
+
+        return rentalService.returnRental(id, user);
+    }
+
+    @GetMapping
+    @PreAuthorize("isAuthenticated()")
+    public Page<RentalDto> getRentals(@AuthenticationPrincipal User user,
+                                      @RequestParam(defaultValue = "true") Boolean isActive,
+                                      @PageableDefault(size = 10, sort = "rentalDate",
+                                              direction = DESC) Pageable pageable) {
+        return rentalService.getRentalsByUser(user, isActive, pageable);
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public RentalDetailedResponseDto getRental(@PathVariable Long id,
@@ -50,15 +67,6 @@ public class RentalController {
         }
 
         return rentalService.getRentalById(id, user);
-    }
-
-    @GetMapping
-    @PreAuthorize("isAuthenticated()")
-    public Page<RentalDto> getRentals(@AuthenticationPrincipal User user,
-                                      @RequestParam(defaultValue = "true") Boolean isActive,
-                                      @PageableDefault(size = 10, sort = "rentalDate",
-                                              direction = DESC) Pageable pageable) {
-        return rentalService.getRentalsByUser(user, isActive, pageable);
     }
 
     @PreAuthorize("hasRole('MANAGER')")

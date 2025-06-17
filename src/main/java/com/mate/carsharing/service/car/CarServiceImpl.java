@@ -70,6 +70,14 @@ public class CarServiceImpl implements CarService {
         return carRepository.save(car);
     }
 
+    @Transactional
+    @Override
+    public void returnCar(Long carId) {
+        Car car = findCarByIdForUpdate(carId);
+        car.setInventory(car.getInventory() + 1);
+        carRepository.save(car);
+    }
+
     private Car findCarByIdForUpdate(Long id) {
         return carRepository.findByIdForUpdate(id)
                 .orElseThrow(() -> new EntityNotFoundException(

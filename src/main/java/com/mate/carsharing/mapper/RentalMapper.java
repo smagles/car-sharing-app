@@ -14,6 +14,7 @@ import org.mapstruct.Mapping;
 public interface RentalMapper {
     @Mapping(target = "carId", source = "car.id")
     @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "isActive", source = "isActive")
     RentalDto toDto(Rental rental);
 
     @Mapping(target = "id", ignore = true)

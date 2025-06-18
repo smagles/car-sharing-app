@@ -36,7 +36,7 @@ public class CarRentalTelegramBot extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-            throw new NotificationException("Failed to send Telegram message");
+            throw new NotificationException("Failed to send Telegram message ", e);
         }
     }
 

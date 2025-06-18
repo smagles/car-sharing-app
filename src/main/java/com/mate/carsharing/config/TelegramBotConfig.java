@@ -1,5 +1,6 @@
 package com.mate.carsharing.config;
 
+import com.mate.carsharing.exception.custom.NotificationException;
 import com.mate.carsharing.service.notification.CarRentalTelegramBot;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,13 @@ public class TelegramBotConfig {
     private final CarRentalTelegramBot carRentalTelegramBot;
 
     @PostConstruct
-    public void registerBot() throws TelegramApiException {
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-        telegramBotsApi.registerBot(carRentalTelegramBot);
+    public void registerBot() {
+        try {
+            new TelegramBotsApi(DefaultBotSession.class)
+                    .registerBot(carRentalTelegramBot);
+        } catch (TelegramApiException ex) {
+            throw new NotificationException(
+                    "Failed to register Telegram bot – notifications disabled", ex);
+        }
     }
 }

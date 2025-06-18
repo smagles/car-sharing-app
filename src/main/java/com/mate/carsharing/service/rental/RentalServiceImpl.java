@@ -10,6 +10,7 @@ import com.mate.carsharing.model.Rental;
 import com.mate.carsharing.model.User;
 import com.mate.carsharing.repository.RentalRepository;
 import com.mate.carsharing.service.car.CarService;
+import com.mate.carsharing.service.notification.NotificationService;
 import com.mate.carsharing.service.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ public class RentalServiceImpl implements RentalService {
     private final RentalMapper rentalMapper;
     private final CarService carService;
     private final UserService userService;
+    private final NotificationService notificationService;
+    private final RentalMessageFormatter messageFormatter;
 
     @Override
     @Transactional
@@ -33,6 +36,9 @@ public class RentalServiceImpl implements RentalService {
         Car car = carService.reserveCar(requestDto.getCarId());
         Rental newRental = rentalMapper.toEntity(requestDto, car, user);
         newRental = rentalRepository.save(newRental);
+
+        notificationService.sendRentalNotification(messageFormatter
+                .formatRentalCreationMessage(newRental, car, user));
         return rentalMapper.toDto(newRental);
     }
 
@@ -99,4 +105,5 @@ public class RentalServiceImpl implements RentalService {
             throw new RentalAlreadyReturnedException(rental.getId());
         }
     }
+
 }

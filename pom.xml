@@ -32,7 +32,7 @@
 		<jjwt.version>0.12.6</jjwt.version>
 		<mapstruct.version>1.6.3</mapstruct.version>
 		<liquibase.version>4.32.0</liquibase.version>
-
+		<telegram.version>6.5.0</telegram.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -107,6 +107,11 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.telegram</groupId>
+			<artifactId>telegrambots-spring-boot-starter</artifactId>
+			<version>${telegram.version}</version>
 		</dependency>
 	</dependencies>
 

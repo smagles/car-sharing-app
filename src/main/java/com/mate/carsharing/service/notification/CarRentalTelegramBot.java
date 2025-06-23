@@ -1,6 +1,7 @@
 package com.mate.carsharing.service.notification;
 
 import com.mate.carsharing.exception.custom.NotificationException;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -25,6 +26,15 @@ public class CarRentalTelegramBot extends TelegramLongPollingBot {
     @Override
     public String getBotToken() {
         return token;
+    }
+
+    @PostConstruct
+    private void validateConfig() {
+        if (username == null || username.isBlank()
+                || token == null || token.isBlank()) {
+            throw new IllegalStateException(
+                    "Telegram bot username or token is not configured");
+        }
     }
 
     public void sendMessage(String chatId, String text) {

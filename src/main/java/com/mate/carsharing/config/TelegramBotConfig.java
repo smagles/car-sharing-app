@@ -19,6 +19,7 @@ public class TelegramBotConfig {
         try {
             new TelegramBotsApi(DefaultBotSession.class)
                     .registerBot(carRentalTelegramBot);
+
         } catch (TelegramApiException ex) {
             throw new NotificationException(
                     "Failed to register Telegram bot – notifications disabled", ex);

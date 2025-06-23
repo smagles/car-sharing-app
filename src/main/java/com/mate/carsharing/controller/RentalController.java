@@ -41,6 +41,7 @@ public class RentalController {
     }
 
     @PostMapping("/{id}/return")
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("isAuthenticated()")
     public RentalDto returnRental(@PathVariable Long id,
                                   @AuthenticationPrincipal User user) {

@@ -1,6 +1,7 @@
 package com.mate.carsharing.service.rental;
 
 import com.mate.carsharing.dto.rental.RentalCreateRequestDto;
+import com.mate.carsharing.dto.rental.RentalCreatedEvent;
 import com.mate.carsharing.dto.rental.RentalDetailedResponseDto;
 import com.mate.carsharing.dto.rental.RentalDto;
 import com.mate.carsharing.exception.custom.RentalAlreadyReturnedException;
@@ -26,6 +27,7 @@ public class RentalServiceImpl implements RentalService {
     private final RentalMapper rentalMapper;
     private final CarService carService;
     private final UserService userService;
+    private final RentalCreatedEventListener eventListener;
 
     @Override
     @Transactional
@@ -33,6 +35,8 @@ public class RentalServiceImpl implements RentalService {
         Car car = carService.reserveCar(requestDto.getCarId());
         Rental newRental = rentalMapper.toEntity(requestDto, car, user);
         newRental = rentalRepository.save(newRental);
+
+        eventListener.handleRentalCreated(new RentalCreatedEvent(newRental, car, user));
         return rentalMapper.toDto(newRental);
     }
 
@@ -99,4 +103,5 @@ public class RentalServiceImpl implements RentalService {
             throw new RentalAlreadyReturnedException(rental.getId());
         }
     }
+
 }

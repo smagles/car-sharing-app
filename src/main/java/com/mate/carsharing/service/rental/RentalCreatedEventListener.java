@@ -15,7 +15,6 @@ public class RentalCreatedEventListener {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handleRentalCreated(RentalCreatedEvent event) {
-
         String message = messageFormatter
                 .formatRentalCreationMessage(event.rental(), event.car(), event.user());
         notificationService.sendRentalNotification(message);

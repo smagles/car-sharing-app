@@ -31,7 +31,7 @@ public class Payment {
     private String sessionUrl;
 
     @Column(name = "session_id", unique = true)
-    private Long sessionId;
+    private String sessionId;
 
     @Column(nullable = false)
     private BigDecimal amount;

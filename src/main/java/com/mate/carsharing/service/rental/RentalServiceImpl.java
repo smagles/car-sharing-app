@@ -84,18 +84,19 @@ public class RentalServiceImpl implements RentalService {
         return rentalMapper.toDto(saved);
     }
 
-    private Rental findRentalById(Long rentalId) {
-        return rentalRepository.findById(rentalId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Rental not found with id: " + rentalId));
-    }
-
-    private Rental findRentalByIdAndUser(Long rentalId, Long userId) {
+    @Override
+    public Rental findRentalByIdAndUser(Long rentalId, Long userId) {
         return rentalRepository.findByIdAndUserId(rentalId, userId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Rental not found with id: " + rentalId
                                 + " and user id: " + userId
                 ));
+    }
+
+    private Rental findRentalById(Long rentalId) {
+        return rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Rental not found with id: " + rentalId));
     }
 
     private void validateRentalIsActive(Rental rental) {

@@ -12,6 +12,10 @@ public class StripeConfig {
 
     @PostConstruct
     public void init() {
+        if (secretKey == null || secretKey.trim().isEmpty()) {
+            throw new IllegalStateException(
+                    "Stripe secret key is required but not configured");
+        }
         Stripe.apiKey = secretKey;
     }
 }

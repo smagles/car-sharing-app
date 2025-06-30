@@ -1,5 +1,6 @@
 package com.mate.carsharing.service.payment;
 
+import com.mate.carsharing.exception.custom.InvalidAmountException;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
@@ -21,7 +22,7 @@ public class StripeServiceImpl implements StripeService {
 
     @Override
     public Session createStripeSession(BigDecimal amount) throws StripeException {
-
+        validateAmount(amount);
         SessionCreateParams params = SessionCreateParams.builder()
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .setSuccessUrl(buildUrl(successPath))
@@ -33,7 +34,6 @@ public class StripeServiceImpl implements StripeService {
                                 .build()
                 )
                 .build();
-        System.out.println(Session.create(params));
         return Session.create(params);
     }
 
@@ -61,4 +61,11 @@ public class StripeServiceImpl implements StripeService {
                 .queryParam("session_id", "{CHECKOUT_SESSION_ID}")
                 .toUriString();
     }
+
+    private void validateAmount(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new InvalidAmountException("Payment amount must be positive");
+        }
+    }
+
 }

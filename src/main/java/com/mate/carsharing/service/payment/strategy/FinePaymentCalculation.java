@@ -15,7 +15,9 @@ public class FinePaymentCalculation implements PaymentCalculationStrategy {
     @Override
     public BigDecimal calculateAmount(Rental rental) {
         long overdueDays = ChronoUnit.DAYS.between(rental.getReturnDate(), LocalDate.now());
-        overdueDays = overdueDays < 1 ? 1 : overdueDays;
+        if (overdueDays < 1) {
+            return BigDecimal.ZERO;
+        }
         return rental.getCar().getDailyFee()
                 .multiply(BigDecimal.valueOf(overdueDays))
                 .multiply(FINE_MULTIPLIER);

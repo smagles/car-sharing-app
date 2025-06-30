@@ -7,7 +7,7 @@ import com.stripe.exception.StripeException;
 import java.util.List;
 
 public interface PaymentService {
-    PaymentDto createPayment(PaymentRequestDto requestDto, User user) throws Exception;
+    PaymentDto createPayment(PaymentRequestDto requestDto, User user) throws StripeException;
 
     void updatePaymentStatus(String sessionId) throws StripeException;
 

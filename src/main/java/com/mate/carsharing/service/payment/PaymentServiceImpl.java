@@ -2,6 +2,7 @@ package com.mate.carsharing.service.payment;
 
 import com.mate.carsharing.dto.payment.PaymentDto;
 import com.mate.carsharing.dto.payment.PaymentRequestDto;
+import com.mate.carsharing.exception.custom.InvalidFineApplicationException;
 import com.mate.carsharing.mapper.PaymentMapper;
 import com.mate.carsharing.model.Payment;
 import com.mate.carsharing.model.Rental;
@@ -14,6 +15,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +35,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional
     public PaymentDto createPayment(PaymentRequestDto requestDto, User user)
             throws StripeException {
+
         Rental rental = rentalService.findRentalByIdAndUser(requestDto.rentalId(), user.getId());
+        validateFineApplicable(rental, requestDto);
 
         PaymentCalculationStrategy strategy = calculationStrategyFactory
                 .getStrategy(requestDto.type());
@@ -77,6 +81,14 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setStatus(Payment.PaymentStatus.PENDING);
         payment.setType(requestDto.type());
         return payment;
+    }
+
+    private void validateFineApplicable(Rental rental, PaymentRequestDto requestDto) {
+        if (requestDto.type() == Payment.PaymentType.FINE
+                && !rental.getReturnDate().isBefore(LocalDate.now())) {
+            throw new InvalidFineApplicationException(
+                    "Fine cannot be applied: rental is not overdue.");
+        }
     }
 
 }

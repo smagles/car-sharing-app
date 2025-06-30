@@ -5,6 +5,7 @@ import com.mate.carsharing.dto.payment.PaymentRequestDto;
 import com.mate.carsharing.model.User;
 import com.mate.carsharing.service.payment.PaymentService;
 import com.stripe.exception.StripeException;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,9 +26,9 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public PaymentDto createPayment(@RequestBody PaymentRequestDto requestDto,
+    public PaymentDto createPayment(@RequestBody @Valid PaymentRequestDto requestDto,
                                     @AuthenticationPrincipal User user)
-            throws Exception {
+            throws StripeException {
         return paymentService.createPayment(requestDto, user);
     }
 

@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
+    private static final String STRIPE_SESSION_STATUS_COMPLETE = "complete";
     private final PaymentRepository paymentRepository;
     private final RentalService rentalService;
     private final PaymentMapper paymentMapper;
@@ -52,7 +53,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public void updatePaymentStatus(String sessionId) throws StripeException {
         Session session = stripeService.retrieveSession(sessionId);
-        if ("complete".equals(session.getStatus())) {
+        if (STRIPE_SESSION_STATUS_COMPLETE.equals(session.getStatus())) {
             Payment payment = findPaymentBySessionId(sessionId);
             payment.setStatus(Payment.PaymentStatus.PAID);
             paymentRepository.save(payment);

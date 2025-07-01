@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 @RequiredArgsConstructor
 public class StripeServiceImpl implements StripeService {
+    private static final BigDecimal MAX_AMOUNT = new BigDecimal("999999.99");
     @Value("${app.domain}")
     private String domain;
     @Value("${stripe.success.path}")
@@ -63,8 +64,10 @@ public class StripeServiceImpl implements StripeService {
     }
 
     private void validateAmount(BigDecimal amount) {
-        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new InvalidAmountException("Payment amount must be positive");
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0
+                || amount.compareTo(MAX_AMOUNT) > 0) {
+            throw new InvalidAmountException(
+                    "Amount must be between $0.00 and $999,999.99");
         }
     }
 

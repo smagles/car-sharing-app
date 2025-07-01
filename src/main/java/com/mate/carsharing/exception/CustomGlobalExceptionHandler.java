@@ -1,8 +1,10 @@
 package com.mate.carsharing.exception;
 
+import com.mate.carsharing.exception.custom.InvalidFineApplicationException;
 import com.mate.carsharing.exception.custom.NoAvailableCarException;
 import com.mate.carsharing.exception.custom.RegistrationException;
 import com.mate.carsharing.exception.custom.RentalAlreadyReturnedException;
+import com.stripe.exception.StripeException;
 import io.jsonwebtoken.JwtException;
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -41,7 +43,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(responseBody, headers, status);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, NoAvailableCarException.class})
+    @ExceptionHandler({IllegalArgumentException.class, NoAvailableCarException.class,
+            InvalidFineApplicationException.class})
     public ResponseEntity<Object> handleIllegalArgumentException(RuntimeException ex) {
         return buildResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
@@ -64,6 +67,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler({RegistrationException.class, RentalAlreadyReturnedException.class})
     public ResponseEntity<Object> handleConflictExceptions(RuntimeException ex) {
         return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<Object> handleIllegalStateException(IllegalStateException ex) {
+        return buildResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
+
+    @ExceptionHandler(StripeException.class)
+    public ResponseEntity<Object> handleStripeException(StripeException ex) {
+        return buildResponseEntity(HttpStatus.BAD_GATEWAY, ex.getMessage());
     }
 
     private ResponseEntity<Object> buildResponseEntity(HttpStatus status, Object error) {

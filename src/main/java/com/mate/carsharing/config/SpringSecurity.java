@@ -33,8 +33,9 @@ public class SpringSecurity {
         return http.cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/error",
-                                "/swagger-ui/**", "/v3/api-docs/**")
+                        .requestMatchers("/auth/**",
+                                "/error", "/swagger-ui/**", "/v3/api-docs/**",
+                                "/payments/success**", "/payments/cancel**")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/cars").permitAll()
                         .anyRequest()

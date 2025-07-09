@@ -1,5 +1,6 @@
 package com.mate.carsharing.controller;
 
+import com.mate.carsharing.controller.docs.AuthenticationControllerDocs;
 import com.mate.carsharing.dto.user.UserDto;
 import com.mate.carsharing.dto.user.UserLoginRequestDto;
 import com.mate.carsharing.dto.user.UserLoginResponseDto;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class AuthenticationController {
+public class AuthenticationController implements AuthenticationControllerDocs {
     private final UserService userService;
     private final AuthenticationService authenticationService;
 

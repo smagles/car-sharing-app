@@ -1,5 +1,6 @@
 package com.mate.carsharing.controller;
 
+import com.mate.carsharing.controller.docs.UserControllerDocs;
 import com.mate.carsharing.dto.user.RoleUpdateRequestDto;
 import com.mate.carsharing.dto.user.UserDto;
 import com.mate.carsharing.dto.user.UserUpdateRequestDto;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-public class UserController {
+public class UserController implements UserControllerDocs {
     private final UserService userService;
 
     @PreAuthorize("hasRole('MANAGER')")

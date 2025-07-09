@@ -10,8 +10,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +32,7 @@ public interface RentalControllerDocs {
             }
     )
     RentalDto createRental(@RequestBody @Valid RentalCreateRequestDto rentalCreateRequestDto,
-                           @RequestBody User user);
+                           @AuthenticationPrincipal User user);
 
     @Operation(
             summary = "Return rental",
@@ -42,7 +44,7 @@ public interface RentalControllerDocs {
                     @ApiResponse(responseCode = "403", description = "Forbidden")
             }
     )
-    RentalDto returnRental(@PathVariable Long id, @RequestBody User user);
+    RentalDto returnRental(@PathVariable Long id, @AuthenticationPrincipal User user);
 
     @Operation(
             summary = "Get user rentals",
@@ -52,7 +54,7 @@ public interface RentalControllerDocs {
                             content = @Content(schema = @Schema(implementation = RentalDto.class)))
             }
     )
-    Page<RentalDto> getRentals(@RequestBody User user,
+    Page<RentalDto> getRentals(@AuthenticationPrincipal User user,
                                @RequestParam(defaultValue = "true") Boolean isActive,
                                Pageable pageable);
 
@@ -68,7 +70,7 @@ public interface RentalControllerDocs {
                     @ApiResponse(responseCode = "403", description = "Forbidden")
             }
     )
-    RentalDetailedResponseDto getRental(@PathVariable Long id, @RequestBody User user);
+    RentalDetailedResponseDto getRental(@PathVariable Long id, @AuthenticationPrincipal User user);
 
     @Operation(
             summary = "Get rentals by user ID",
@@ -81,7 +83,7 @@ public interface RentalControllerDocs {
     )
     Page<RentalDto> getRentalsByUser(@PathVariable Long userId,
                                      @RequestParam(defaultValue = "true") Boolean isActive,
-                                     Pageable pageable);
+                                     @ParameterObject Pageable pageable);
 
     @Operation(
             summary = "Get all rentals",

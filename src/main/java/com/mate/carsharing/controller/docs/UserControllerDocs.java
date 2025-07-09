@@ -20,7 +20,7 @@ public interface UserControllerDocs {
     @Operation(
             summary = "Update user role",
             description = "Change a user's role (requires MANAGER privileges)",
-            security = @SecurityRequirement(name = "bearerAuth"),
+            security = @SecurityRequirement(name = "BearerAuth"),
             responses = {
                     @ApiResponse(responseCode = "200", description = "Role updated successfully",
                             content = @Content(schema = @Schema(implementation = UserDto.class))),

@@ -20,9 +20,8 @@ public class BorrowingValidationServiceImpl implements BorrowingValidationServic
 
         if (hasUnresolvedPayments) {
             throw new ForbiddenOperationException(
-                    "You must resolve your pending or "
-                            + "expired payments before borrowing");
+                    "You must resolve your pending or expired payments before borrowing");
+
         }
     }
-
 }

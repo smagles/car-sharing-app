@@ -47,7 +47,7 @@ public class Payment {
     private PaymentType type;
 
     public enum PaymentStatus {
-        PENDING, PAID
+        PENDING, PAID, EXPIRED
     }
 
     public enum PaymentType {

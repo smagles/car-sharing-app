@@ -12,4 +12,6 @@ public interface PaymentService {
     void updatePaymentStatus(String sessionId) throws StripeException;
 
     List<PaymentDto> getUserPayments(Long userId);
+
+    PaymentDto renewPayment(Long paymentId, User user) throws StripeException;
 }

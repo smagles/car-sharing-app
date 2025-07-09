@@ -1,5 +1,5 @@
 package com.mate.carsharing.service.notification;
 
 public interface NotificationService {
-    void sendRentalNotification(String message);
+    void sendNotification(String message);
 }

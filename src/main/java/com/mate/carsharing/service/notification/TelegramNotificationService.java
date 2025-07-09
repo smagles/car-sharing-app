@@ -12,7 +12,7 @@ public class TelegramNotificationService implements NotificationService {
     private final CarRentalTelegramBot carRentalBot;
 
     @Override
-    public void sendRentalNotification(String message) {
+    public void sendNotification(String message) {
         carRentalBot.sendMessage(chatId, message);
     }
 }

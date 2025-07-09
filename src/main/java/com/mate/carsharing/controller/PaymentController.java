@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/payments")
 public class PaymentController {
-
     private final PaymentService paymentService;
 
     @PostMapping
@@ -43,6 +42,12 @@ public class PaymentController {
         return paymentService.getUserPayments(userId);
     }
 
+    @PostMapping("/{paymentId}/renew")
+    public PaymentDto renewPayment(@PathVariable Long paymentId,
+                                   @AuthenticationPrincipal User user) throws StripeException {
+        return paymentService.renewPayment(paymentId, user);
+    }
+
     @GetMapping("/success")
     public String paymentSuccess(@RequestParam("session_id") String sessionId)
             throws StripeException {
@@ -52,6 +57,7 @@ public class PaymentController {
 
     @GetMapping("/cancel")
     public String paymentCancel(@RequestParam("session_id") String sessionId) {
-        return "Payment canceled. You can try again.";
+        return "Payment was canceled. You can try again within 24 hours";
     }
+
 }

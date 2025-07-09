@@ -1,7 +1,9 @@
 package com.mate.carsharing.exception;
 
+import com.mate.carsharing.exception.custom.ForbiddenOperationException;
 import com.mate.carsharing.exception.custom.InvalidFineApplicationException;
 import com.mate.carsharing.exception.custom.NoAvailableCarException;
+import com.mate.carsharing.exception.custom.PaymentAlreadyPaidException;
 import com.mate.carsharing.exception.custom.RegistrationException;
 import com.mate.carsharing.exception.custom.RentalAlreadyReturnedException;
 import com.stripe.exception.StripeException;
@@ -54,8 +56,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return buildResponseEntity(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
-    @ExceptionHandler({AccessDeniedException.class})
-    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
+    @ExceptionHandler({AccessDeniedException.class, ForbiddenOperationException.class})
+    public ResponseEntity<Object> handleForbiddenExceptions(RuntimeException ex) {
         return buildResponseEntity(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
@@ -64,7 +66,8 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    @ExceptionHandler({RegistrationException.class, RentalAlreadyReturnedException.class})
+    @ExceptionHandler({RegistrationException.class, RentalAlreadyReturnedException.class,
+            PaymentAlreadyPaidException.class})
     public ResponseEntity<Object> handleConflictExceptions(RuntimeException ex) {
         return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
     }

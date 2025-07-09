@@ -25,12 +25,12 @@ public class RentalOverdueCheckServiceImpl implements RentalOverdueCheckService 
         List<Rental> overdueRentals = rentalRepository.findOverdueRentals(tomorrow);
 
         if (overdueRentals.isEmpty()) {
-            notificationService.sendRentalNotification("No rentals overdue today!");
+            notificationService.sendNotification("No rentals overdue today!");
             return;
         }
         for (Rental rental : overdueRentals) {
             String message = messageFormatter.formatOverdueRentalMessage(rental);
-            notificationService.sendRentalNotification(message);
+            notificationService.sendNotification(message);
         }
     }
 }

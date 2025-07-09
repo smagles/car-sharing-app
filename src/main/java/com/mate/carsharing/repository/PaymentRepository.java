@@ -13,4 +13,18 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     @Query("SELECT p FROM Payment p WHERE p.rental.user.id = :userId")
     List<Payment> findPaymentsByUserId(@Param("userId") Long userId);
 
+    @Query("SELECT p FROM Payment p "
+            + "WHERE p.id = :paymentId "
+            + "AND p.rental.user.id = :userId")
+    Optional<Payment> findByIdAndUserId(@Param("paymentId") Long paymentId,
+                                        @Param("userId") Long userId);
+
+    List<Payment> findByStatus(Payment.PaymentStatus paymentStatus);
+
+    @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END "
+            + "FROM Payment p "
+            + "WHERE p.rental.user.id = :userId AND p.status IN :statuses")
+    boolean existsByUserIdAndStatusIn(@Param("userId") Long userId,
+                                      @Param("statuses") List<Payment.PaymentStatus> statuses);
+
 }

@@ -3,6 +3,7 @@ package com.mate.carsharing.service.payment;
 import com.mate.carsharing.exception.custom.ForbiddenOperationException;
 import com.mate.carsharing.model.Payment;
 import com.mate.carsharing.repository.PaymentRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,15 @@ public class BorrowingValidationServiceImpl implements BorrowingValidationServic
 
     @Override
     public void validateNoPendingPayments(Long userId) {
-        boolean hasPending = paymentRepository.existsByUserIdAndStatus(userId,
-                Payment.PaymentStatus.PENDING);
-        if (hasPending) {
+        boolean hasUnresolvedPayments = paymentRepository.existsByUserIdAndStatusIn(
+                userId, List.of(Payment.PaymentStatus.PENDING,
+                        Payment.PaymentStatus.EXPIRED));
+
+        if (hasUnresolvedPayments) {
             throw new ForbiddenOperationException(
-                    "You must pay your pending payments before borrowing");
+                    "You must resolve your pending or "
+                            + "expired payments before borrowing");
         }
     }
+
 }

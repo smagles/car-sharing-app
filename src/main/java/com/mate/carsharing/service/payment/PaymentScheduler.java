@@ -7,6 +7,8 @@ import com.stripe.model.checkout.Session;
 import java.time.Instant;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class PaymentScheduler {
+    private static final Logger log = LoggerFactory.getLogger(PaymentScheduler.class);
     private final PaymentRepository paymentRepository;
     private final StripeService stripeService;
 
@@ -30,9 +33,9 @@ public class PaymentScheduler {
                     payment.setStatus(Payment.PaymentStatus.EXPIRED);
                     paymentRepository.save(payment);
                 }
-
             } catch (StripeException e) {
-                throw new RuntimeException(e);
+                log.error("Failed to retrieve Stripe session for payment ID {}: {}",
+                        payment.getId(), e.getMessage());
             }
         }
     }

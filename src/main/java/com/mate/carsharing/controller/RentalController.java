@@ -2,6 +2,7 @@ package com.mate.carsharing.controller;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
+import com.mate.carsharing.controller.docs.RentalControllerDocs;
 import com.mate.carsharing.dto.rental.RentalCreateRequestDto;
 import com.mate.carsharing.dto.rental.RentalDetailedResponseDto;
 import com.mate.carsharing.dto.rental.RentalDto;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rentals")
-public class RentalController {
+public class RentalController implements RentalControllerDocs {
     private final RentalService rentalService;
 
     @PostMapping

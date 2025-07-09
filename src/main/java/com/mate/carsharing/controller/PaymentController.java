@@ -1,5 +1,6 @@
 package com.mate.carsharing.controller;
 
+import com.mate.carsharing.controller.docs.PaymentControllerDocs;
 import com.mate.carsharing.dto.payment.PaymentDto;
 import com.mate.carsharing.dto.payment.PaymentRequestDto;
 import com.mate.carsharing.model.User;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/payments")
-public class PaymentController {
+public class PaymentController implements PaymentControllerDocs {
     private final PaymentService paymentService;
 
     @PostMapping

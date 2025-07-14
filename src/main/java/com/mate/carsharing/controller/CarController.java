@@ -1,5 +1,6 @@
 package com.mate.carsharing.controller;
 
+import com.mate.carsharing.controller.docs.CarControllerDocs;
 import com.mate.carsharing.dto.car.CarCreateRequestDto;
 import com.mate.carsharing.dto.car.CarDto;
 import com.mate.carsharing.dto.car.CarUpdateRequestDto;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/cars")
-public class CarController {
+public class CarController implements CarControllerDocs {
     private final CarService carService;
 
     @PostMapping

@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,6 +25,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "cars")
 @SQLDelete(sql = "UPDATE cars SET is_deleted = true WHERE id=?")
 @Where(clause = "is_deleted = false")
+@Builder
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +44,7 @@ public class Car {
     @Column(nullable = false)
     private int inventory;
 
-    @Column(name = " daily_fee", nullable = false)
+    @Column(name = "daily_fee", nullable = false)
     private BigDecimal dailyFee;
 
     @Column(name = "is_deleted")

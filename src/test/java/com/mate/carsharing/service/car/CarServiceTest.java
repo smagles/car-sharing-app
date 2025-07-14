@@ -20,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -80,6 +79,7 @@ class CarServiceTest {
         verify(carMapper).toModel(requestDto);
         verify(carRepository).save(car);
         verify(carMapper).toDto(car);
+        verifyNoMoreInteractions(carMapper, carRepository);
     }
 
     @Test
@@ -100,6 +100,7 @@ class CarServiceTest {
         assertThat(result).isEqualTo(carDto);
         verify(carRepository).findById(carId);
         verify(carMapper).toDto(car);
+        verifyNoMoreInteractions(carRepository, carMapper);
     }
 
     @Test
@@ -115,6 +116,7 @@ class CarServiceTest {
 
         assertThat(exception.getMessage()).isEqualTo("Car not found with id: " + carId);
         verify(carRepository).findById(carId);
+        verifyNoMoreInteractions(carRepository);
     }
 
     @Test
@@ -190,6 +192,7 @@ class CarServiceTest {
         assertThrows(EntityNotFoundException.class,
                 () -> carService.updateCar(carId, requestDto));
         verify(carRepository).findById(carId);
+        verifyNoMoreInteractions(carRepository);
     }
 
     @Test
@@ -206,6 +209,7 @@ class CarServiceTest {
         // Then
         verify(carRepository).findById(carId);
         verify(carRepository).deleteById(carId);
+        verifyNoMoreInteractions(carRepository);
     }
 
     @Test
@@ -218,5 +222,6 @@ class CarServiceTest {
         // When / Then
         assertThrows(EntityNotFoundException.class, () -> carService.deleteCar(carId));
         verify(carRepository).findById(carId);
+        verifyNoMoreInteractions(carRepository);
     }
 }

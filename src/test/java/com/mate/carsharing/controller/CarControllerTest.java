@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = "/database/001-add-default-cars.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(scripts = "/database/001-add-default-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 class CarControllerTest {
     protected static MockMvc mockMvc;
 

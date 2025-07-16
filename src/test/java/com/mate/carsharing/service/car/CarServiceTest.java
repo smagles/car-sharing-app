@@ -41,7 +41,7 @@ class CarServiceTest {
                 .brand("Toyota")
                 .model("Corolla")
                 .carType(Car.CarType.SEDAN)
-                .dailyFee(BigDecimal.valueOf(20000))
+                .dailyFee(BigDecimal.valueOf(200))
                 .inventory(5)
                 .build();
     }
@@ -63,7 +63,7 @@ class CarServiceTest {
         // Given
         CarCreateRequestDto requestDto = new CarCreateRequestDto(
                 "Toyota", "Corolla",
-               "SEDAN", 5,  BigDecimal.valueOf(20000));
+               "SEDAN", 5,  BigDecimal.valueOf(200));
         Car car = createTestCar();
         CarDto carDto = createTestCarDto(car);
 
@@ -149,7 +149,7 @@ class CarServiceTest {
         Car existingCar = createTestCar();
         CarUpdateRequestDto requestDto = new CarUpdateRequestDto(
                 "Tesla", "Model 3", "SEDAN", 5,
-                BigDecimal.valueOf(50000));
+                BigDecimal.valueOf(500));
 
         Car updatedCar = Car.builder()
                 .id(carId)
@@ -185,7 +185,7 @@ class CarServiceTest {
         Long carId = 42L;
         CarUpdateRequestDto requestDto = new CarUpdateRequestDto(
                 "Ford", "Focus", "SEDAN",
-                3, BigDecimal.valueOf(18000));
+                3, BigDecimal.valueOf(180));
         when(carRepository.findById(carId)).thenReturn(Optional.empty());
 
         // When / Then

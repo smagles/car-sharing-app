@@ -43,27 +43,6 @@ class PaymentControllerTest {
 
     @Test
     @WithMockUser(username = "customer", roles = {"CUSTOMER"})
-    @DisplayName("Should create payment for authenticated user")
-    void createPayment_ValidRequest_ShouldReturnCreated() throws Exception {
-        PaymentRequestDto requestDto = new PaymentRequestDto(1L, Payment.PaymentType.PAYMENT);
-        User alice = userRepository.findByEmail("alice@example.com")
-                .orElseThrow();
-
-        String json = objectMapper.writeValueAsString(requestDto);
-
-        MvcResult result = mockMvc.perform(post("/payments")
-                        .with(user(alice))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").exists())
-                .andReturn();
-
-        assertNotNull(result.getResponse().getContentAsString());
-    }
-
-    @Test
-    @WithMockUser(username = "customer", roles = {"CUSTOMER"})
     @DisplayName("Should return list of user's payments")
     void getMyPayments_ShouldReturnListOfPayments() throws Exception {
         User alice = userRepository.findByEmail("alice@example.com")

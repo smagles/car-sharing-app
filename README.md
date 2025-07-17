@@ -12,33 +12,29 @@ A modern car-sharing platform built with <img src="https://img.icons8.com/color/
 - <img src="https://img.icons8.com/color/48/000000/spring-logo.png" width="16"/> **Spring Security** - 🔐 Authentication & authorization
 - <img src="https://jwt.io/img/pic_logo.svg" width="16"/> **JWT** - Secure token-based authentication
 - <img src="https://mapstruct.org/images/mapstruct.png" width="16"/> **MapStruct** - Efficient DTO mapping
-- <img src="https://img.icons8.com/color/48/database.png" width="16"/> **Liquibase**
+- <img src="https://img.icons8.com/color/48/database.png" width="16"/> **Liquibase** - Database migrations
 - <img src="https://img.icons8.com/color/48/000000/mysql-logo.png" width="16"/> **MySQL** - Primary database (H2 for testing)
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="16"/> Docker – Containerization for deployment and testing
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg" width="16"/> Maven – Project build and dependency management
+- <img src="https://img.icons8.com/ios/50/000000/test-tube.png" width="16"/> JUnit 5 – Unit testing framework
+
 
 ### Integrations
 - <img src="https://img.icons8.com/color/48/000000/stripe.png" width="16"/> **Stripe API** - Payment processing
 - <img src="https://img.icons8.com/color/48/000000/telegram-app.png" width="16"/> **Telegram Bot API** - Real-time notifications
-- <img src="https://springdoc.org/images/springdoc-openapi.png" width="16"/> **SpringDoc OpenAPI** - API documentation
+- <img src="https://www.svgrepo.com/show/342276/swagger.svg" width="16"/> **SpringDoc OpenAPI** - API documentation
+- <img src="https://img.icons8.com/color/48/000000/github.png" width="16"/> GitHub Actions – CI/CD pipelines
 
+## 📌 About
 
-## ☑️ Key Features
+This is a **learning project** where I’ve developed a backend for a car-sharing platform.  
+The application allows users to:
 
-- **User Management**: Registration, authentication (JWT), and role-based access (MANAGER/CUSTOMER)
-- **Car Inventory**: CRUD operations for vehicles with real-time availability tracking
-- **Rental System**:
-    - Book cars with date range selection
-    - Automatic inventory adjustment
-    - Overdue rental detection
-- **Payment Integration**:
-    - Stripe payment processing
-    - Session management with success/cancel endpoints
-    - Fine calculation for overdue rentals
-- **Real-time Notifications**:
-    - Telegram alerts for new rentals
-    - Payment confirmations
-    - Daily overdue reminders
-- **API Documentation**: Full Swagger/OpenAPI support
-
+- Rent cars and track their bookings
+- Manage payments using **Stripe**
+- Receive real-time updates through **Telegram notifications**
+- Register and log in securely with JWT authentication
+- Use role-based access for **users** and **managers**
 
 ## 🚀 Getting Started
 

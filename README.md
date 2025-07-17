@@ -14,16 +14,16 @@ A modern car-sharing platform built with <img src="https://img.icons8.com/color/
 - <img src="https://mapstruct.org/images/mapstruct.png" width="16"/> **MapStruct** - Efficient DTO mapping
 - <img src="https://img.icons8.com/color/48/database.png" width="16"/> **Liquibase** - Database migrations
 - <img src="https://img.icons8.com/color/48/000000/mysql-logo.png" width="16"/> **MySQL** - Primary database (H2 for testing)
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="16"/> Docker – Containerization for deployment and testing
-- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg" width="16"/> Maven – Project build and dependency management
-- <img src="https://img.icons8.com/ios/50/000000/test-tube.png" width="16"/> JUnit 5 – Unit testing framework
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" width="16"/> **Docker** – Containerization for deployment and testing
+- <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/maven/maven-original.svg" width="16"/> **Maven** – Project build and dependency management
+- <img src="https://img.icons8.com/ios/50/000000/test-tube.png" width="16"/> **JUnit 5** – Unit testing framework
 
 
 ### Integrations
 - <img src="https://img.icons8.com/color/48/000000/stripe.png" width="16"/> **Stripe API** - Payment processing
 - <img src="https://img.icons8.com/color/48/000000/telegram-app.png" width="16"/> **Telegram Bot API** - Real-time notifications
 - <img src="https://www.svgrepo.com/show/342276/swagger.svg" width="16"/> **SpringDoc OpenAPI** - API documentation
-- <img src="https://img.icons8.com/color/48/000000/github.png" width="16"/> GitHub Actions – CI/CD pipelines
+- <img src="https://img.icons8.com/color/48/000000/github.png" width="16"/> **GitHub Actions** – CI/CD pipelines
 
 ## 📌 About
 

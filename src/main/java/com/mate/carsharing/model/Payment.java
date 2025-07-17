@@ -27,7 +27,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "session_url")
+    @Column(name = "session_url", length = 512)
     private String sessionUrl;
 
     @Column(name = "session_id", unique = true)

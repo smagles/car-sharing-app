@@ -38,6 +38,20 @@ The application allows users to:
 
 ## 🚀 Getting Started
 
+### Environment Variables
+
+The application uses the following environment variables:
+
+| Variable              | Default value                                  | Description                          |
+|-----------------------|------------------------------------------------|--------------------------------------|
+| `JWT_EXPIRATION`      | `21600000`                                     | JWT expiration in milliseconds       |
+| `JWT_SECRET`          | `my-very-strong-secret-32-chars-long-1234`    | Secret key used to sign JWT tokens   |
+| `TELEGRAM_BOT_TOKEN`  | `your-bot-token`                               | Token for Telegram Bot               |
+| `TELEGRAM_CHAT_ID`    | `12345678`                                     | Chat ID used by Telegram Bot         |
+| `STRIPE_SECRET_KEY`   | `your-stripe-key`                              | Stripe API secret key                |
+
+
+
 #### 1. Clone the repository:
     ```bash
     git clone https://github.com/smagles/car-sharing-app

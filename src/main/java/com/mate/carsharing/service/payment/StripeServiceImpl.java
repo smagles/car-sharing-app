@@ -7,11 +7,13 @@ import com.stripe.param.checkout.SessionCreateParams;
 import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 @RequiredArgsConstructor
+@Profile("!develop")
 public class StripeServiceImpl implements StripeService {
     private static final BigDecimal MAX_AMOUNT = new BigDecimal("999999.99");
     @Value("${app.domain}")

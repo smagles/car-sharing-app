@@ -1,6 +1,7 @@
 package com.mate.carsharing.config;
 
 import com.mate.carsharing.security.JwtAuthenticationFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,11 @@ public class SpringSecurity {
                         .requestMatchers(HttpMethod.GET, "/cars").permitAll()
                         .anyRequest()
                         .authenticated())
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        }))
                 .addFilterBefore(jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(userDetailsService)

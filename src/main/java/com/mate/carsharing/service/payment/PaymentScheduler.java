@@ -9,12 +9,14 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
+@Profile("!develop")
 public class PaymentScheduler {
     private static final Logger log = LoggerFactory.getLogger(PaymentScheduler.class);
     private final PaymentRepository paymentRepository;
